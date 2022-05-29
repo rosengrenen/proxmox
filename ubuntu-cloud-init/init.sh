@@ -20,9 +20,9 @@ apt install -y qemu-guest-agent
 apt install -y fish
 snap install starship
 mkdir -p /root/.config/fish
-cp config.fish /root/.config/fish/config.fish
+cp ../shared/config.fish /root/.config/fish/config.fish
 mkdir -p /etc/skel/.config/fish
-cp config.fish /etc/skel/.config/fish/config.fish
+cp ../shared/config.fish /etc/skel/.config/fish/config.fish
 
 # set root default shell to fish
 usermod --shell /bin/fish root
