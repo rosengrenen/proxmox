@@ -33,6 +33,9 @@ usermod --shell /bin/fish root
 user=$(cat /etc/passwd | grep 1000:1000 | awk -F : '{print $1}')
 deluser $user --remove-home
 
+# update sshd_config
+cp $script_loc/sshd_config /etc/ssh/sshd_config
+
 # disable root password
 passwd -d root
 passwd -l root
