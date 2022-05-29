@@ -5,8 +5,6 @@ services:
     restart: unless-stopped
     networks:
       - traefik
-    ports:
-      - 9090:8080
     volumes:
       - ${TRILIUM_DATA}:/home/node/trilium-data
     labels:
