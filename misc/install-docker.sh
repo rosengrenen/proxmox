@@ -24,5 +24,5 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # install packages
-sudo apt update
-sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt update -y
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
