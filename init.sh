@@ -29,7 +29,7 @@ usermod --shell /bin/fish root
 
 # remove default user
 user=$(cat /etc/passwd | grep 1000:1000 | awk -F : '{print $1}')
-deluser $user
+deluser $user --remove-home
 
 # disable root password
 passwd -d root
