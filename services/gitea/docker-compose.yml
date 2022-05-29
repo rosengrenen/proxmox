@@ -17,7 +17,7 @@ services:
     ports:
       - 2222:22
     volumes:
-      - ${GITEA_DATA}:/data/gitea
+      - ${GITEA_DATA}:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
