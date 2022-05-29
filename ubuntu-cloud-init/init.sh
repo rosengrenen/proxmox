@@ -47,5 +47,5 @@ rm -f /root/.bash_history
 # self destruct
 rm -r $script_loc/..
 
-# restart
-reboot
+# poweroff
+poweroff
