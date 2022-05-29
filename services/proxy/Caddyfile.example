@@ -1,0 +1,54 @@
+{
+  email admin@rsrp.se
+}
+
+(cloudflare-tls) {
+  header Strict-Transport-Security "max-age=31536000;"
+
+  tls {
+    issuer acme {
+      dns cloudflare {$CLOUDFLARE_API_TOKEN}
+    }
+  }
+}
+
+:80 {
+  @http {
+    protocol http
+  }
+
+  redir @http https://{host}{url} permanent
+}
+
+https://pve.rsrp.se {
+  import cloudflare-tls
+
+  reverse_proxy {
+    to https://gielinor:8006
+    header_up X-Real-IP {remote_host}
+    header_up X-Forwarded-Port 443
+    transport http {
+      tls_insecure_skip_verify
+    }
+  }
+}
+
+https://*.rsrp.se {
+  import cloudflare-tls
+
+  reverse_proxy {
+    to http://wilderness:80
+    header_up X-Real-IP {remote_host}
+    header_up X-Forwarded-Port 443
+  }
+}
+
+https://home.rsrp.se {
+  import cloudflare-tls
+
+  reverse_proxy {
+    to http://wilderness:8123
+    header_up X-Real-IP {remote_host}
+    header_up X-Forwarded-Port 443
+  }
+}

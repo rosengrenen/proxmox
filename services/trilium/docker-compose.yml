@@ -1,0 +1,18 @@
+version: "3"
+services:
+  trilium:
+    image: zadam/trilium:0.47-latest
+    restart: unless-stopped
+    networks:
+      - traefik
+    ports:
+      - 9090:8080
+    volumes:
+      - ${TRILIUM_DATA}:/home/node/trilium-data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.trilium.rule=Host(`${TRILIUM_HOST}`)"
+
+networks:
+  traefik:
+    external: true

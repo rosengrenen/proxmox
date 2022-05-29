@@ -1,0 +1,21 @@
+entryPoints:
+  http:
+    address: :80
+
+providers:
+  docker:
+    exposedByDefault: false
+    network: traefik
+
+api:
+  dashboard: true
+  insecure: false
+
+log:
+  filePath: /var/log/traefik.log
+  format: json
+  level: WARN
+
+accessLog:
+  filePath: /var/log/access.log
+  format: json

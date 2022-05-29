@@ -1,0 +1,11 @@
+version: "3"
+services:
+  proxy:
+    image: cthit/caddy-cloudflare:2.3.0
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      CLOUDFLARE_API_TOKEN: ${PROXY_CLOUDFLARE_API_TOKEN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ${PROXY_DATA}:/data

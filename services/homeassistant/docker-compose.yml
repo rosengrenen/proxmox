@@ -1,0 +1,10 @@
+version: "3"
+services:
+  homeassistant:
+    image: homeassistant/home-assistant:2021.9.0b6
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Stockholm
+    network_mode: host
+    volumes:
+      - ${HOMEASSISTANT_DATA}/config:/config

@@ -1,0 +1,46 @@
+version: '3'
+services:
+  gitea:
+    image: gitea/gitea:1.14.6
+    restart: unless-stopped
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=postgres
+      - GITEA__database__HOST=gitea-db:5432
+      - GITEA__database__NAME=${DB_NAME}
+      - GITEA__database__USER=${DB_USER}
+      - GITEA__database__PASSWD=${DB_PASS}
+    networks:
+      - traefik
+      - default
+    ports:
+      - 2222:22
+    volumes:
+      - ${GITEA_DATA}:/data/gitea
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.gitea.rule=Host(`${GITEA_HOST}`)
+      - traefik.http.services.gitea.loadbalancer.server.port=3000
+
+  gitea-db:
+    image: postgres:13.4
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    networks:
+      - default
+      - adminer
+    volumes:
+      - ${DB_DATA}:/var/lib/postgresql/data
+
+networks:
+  default:
+  adminer:
+    external: true
+  traefik:
+    external: true

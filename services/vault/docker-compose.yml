@@ -1,0 +1,27 @@
+version: "3"
+services:
+  vault:
+    image: vaultwarden/server:1.22.2
+    restart: unless-stopped
+    environment:
+      WEBSOCKET_ENABLED: "true"
+      SMTP_USERNAME: ${VAULT_SMTP_USER}
+      SMTP_SSL: "true"
+      SMTP_PORT: 587
+      SMTP_PASSWORD: ${VAULT_SMTP_PASS}
+      SMTP_HOST: ${VAULT_SMTP_HOST}
+      SMTP_FROM: ${VAULT_SMTP_FROM}
+      SIGNUPS_ALLOWED: "false"
+      DOMAIN: https://${VAULT_HOST}
+      ADMIN_TOKEN: ${VAULT_ADMIN_TOKEN}
+    networks:
+      - traefik
+    volumes:
+      - ${VAULT_DATA}:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vault.rule=Host(`${VAULT_HOST}`)"
+
+networks:
+  traefik:
+    external: true

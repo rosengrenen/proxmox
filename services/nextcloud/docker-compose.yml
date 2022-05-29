@@ -1,0 +1,54 @@
+version: "3"
+services:
+  nextcloud:
+    image: nextcloud:21.0
+    restart: unless-stopped
+    environment:
+      NEXTCLOUD_TRUSTED_DOMAINS: ${NEXTCLOUD_HOST}
+      POSTGRES_HOST: nextcloud-db
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      REDIS_HOST: redis
+      SMTP_HOST: ${NEXTCLOUD_SMTP_HOST}
+      SMTP_SECURE: tls
+      SMTP_PORT: 587
+      SMTP_NAME: ${NEXTCLOUD_SMTP_USER}
+      SMTP_PASSWORD: ${NEXTCLOUD_SMTP_PASS}
+      MAIL_FROM_ADDRESS: ${NEXTCLOUD_SMTP_FROM}
+      OVERWRITEHOST: ${NEXTCLOUD_HOST}
+      OVERWRITEPROTOCOL: https
+    networks:
+      - default
+      - traefik
+    volumes:
+      - ${NEXTCLOUD_DATA}:/var/www/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.rule=Host(`${NEXTCLOUD_HOST}`)"
+
+  nextcloud-db:
+    image: postgres:13.4
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    networks:
+      - default
+      - adminer
+    volumes:
+      - ${DB_DATA}:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6.2
+    restart: unless-stopped
+    networks:
+      - default
+
+networks:
+  default:
+  adminer:
+    external: true
+  traefik:
+    external: true

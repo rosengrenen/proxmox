@@ -1,0 +1,21 @@
+version: '3'
+services:
+  traefik:
+    image: traefik:v2.5.3
+    restart: unless-stopped
+    networks:
+      - traefik
+    ports:
+      - 80:80
+    volumes:
+      - ${TRAEFIK_DATA}/log:/var/log
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yml:/etc/traefik/traefik.yml
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`${TRAEFIK_HOST}`)"
+      - "traefik.http.routers.traefik-dashboard.service=api@internal"
+
+networks:
+  traefik:
+    external: true

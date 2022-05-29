@@ -1,0 +1,19 @@
+version: '3'
+services:
+  adminer:
+    image: adminer:4.8.1
+    restart: unless-stopped
+    networks:
+      - adminer
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.adminer-basic-auth.basicauth.users=${ADMINER_USER}:${ADMINER_PASS_BCRYPT}"
+      - "traefik.http.routers.adminer.middlewares=adminer-basic-auth@docker"
+      - "traefik.http.routers.adminer.rule=Host(`${ADMINER_HOST}`)"
+
+networks:
+  adminer:
+    external: true
+  traefik:
+    external: true

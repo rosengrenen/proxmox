@@ -1,0 +1,18 @@
+version: '3'
+services:
+  portainer:
+    image: portainer/portainer-ce:2.9.2
+    restart: unless-stopped
+    networks:
+      - traefik
+    volumes:
+      - ${PORTAINER_DATA}:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`${PORTAINER_HOST}`)"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+
+networks:
+  traefik:
+    external: true
