@@ -21,7 +21,7 @@ services:
       - default
       - traefik
     volumes:
-      - ${DRONE_DATA}S:/data
+      - ${DRONE_DATA}:/data
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.drone.rule=Host(`${DRONE_HOST}`)"
