@@ -33,11 +33,12 @@ https://pve.rsrp.se {
   }
 }
 
+https://rsrp.se,
 https://*.rsrp.se {
   import cloudflare-tls
 
   reverse_proxy {
-    to http://wilderness:80
+    to http://localhost:8080
     header_up X-Real-IP {remote_host}
     header_up X-Forwarded-Port 443
   }
@@ -47,7 +48,7 @@ https://home.rsrp.se {
   import cloudflare-tls
 
   reverse_proxy {
-    to http://wilderness:8123
+    to http://localhost:8123
     header_up X-Real-IP {remote_host}
     header_up X-Forwarded-Port 443
   }
