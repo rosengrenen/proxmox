@@ -1,0 +1,14 @@
+version: "3"
+services:
+  unifi-network:
+    image: jacobalberty/unifi:v7.2.94
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      TZ: Europe/Stockholm
+    # ports:
+    #   - 8080:8080
+    #   - 8443:8443
+    #   - 3478:3478/udp
+    volumes:
+      - ${UNIFI_DATA}:/unifi
