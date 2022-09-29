@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     network_mode: host
     environment:
-      CLOUDFLARE_API_TOKEN: ${PROXY_CLOUDFLARE_API_TOKEN}
+      CLOUDFLARE_API_TOKEN: ${CADDY_CLOUDFLARE_API_TOKEN}
     volumes:
       - ${CADDY_CONF}:/etc/caddy/Caddyfile
       - ${CADDY_DATA}:/data
