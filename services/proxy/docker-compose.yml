@@ -7,5 +7,19 @@ services:
     environment:
       CLOUDFLARE_API_TOKEN: ${PROXY_CLOUDFLARE_API_TOKEN}
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - ${PROXY_DATA}:/data
+      - ${CADDY_CONF}:/etc/caddy/Caddyfile
+      - ${CADDY_DATA}:/data
+
+  random-tcp:
+    image: alpine/socat:1.7.4.3-r1
+    restart: unless-stopped
+    ports:
+      - ${RANDOM_PORT}:3000/tcp
+    command: socat -d TCP4-LISTEN:3000,reuseaddr,fork TCP4:${RANDOM_DST}
+
+  random-udp:
+    image: alpine/socat:1.7.4.3-r1
+    restart: unless-stopped
+    ports:
+      - ${RANDOM_PORT}:3000/udp
+    command: socat -T 600 UDP4-LISTEN:3000,reuseaddr,fork UDP4:${RANDOM_DST}
