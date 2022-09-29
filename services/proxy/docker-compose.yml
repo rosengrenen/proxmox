@@ -1,7 +1,7 @@
 version: "3"
 services:
   proxy:
-    image: cthit/caddy-cloudflare:2.3.0
+    image: rsrp/caddy-cloudflare:2.6.1
     restart: unless-stopped
     network_mode: host
     environment:

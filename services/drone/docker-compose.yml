@@ -1,7 +1,7 @@
 version: "3"
 services:
   drone:
-    image: drone/drone:2.0
+    image: drone/drone:2.13.0
     restart: unless-stopped
     environment:
       DRONE_GITEA_SERVER: ${DRONE_GITEA_HOST}
@@ -40,7 +40,7 @@ services:
       - ${DB_DATA}:/var/lib/postgresql/data
 
   drone-runner:
-    image: drone/drone-runner-docker:1.6
+    image: drone/drone-runner-docker:1.8.2
     restart: unless-stopped
     environment:
       DRONE_RPC_PROTO: https

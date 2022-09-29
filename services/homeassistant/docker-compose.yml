@@ -1,7 +1,7 @@
 version: "3"
 services:
   homeassistant:
-    image: homeassistant/home-assistant:2021.9.0b6
+    image: homeassistant/home-assistant:2022.9.7
     restart: unless-stopped
     environment:
       TZ: Europe/Stockholm

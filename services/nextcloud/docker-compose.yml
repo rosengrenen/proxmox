@@ -1,7 +1,7 @@
 version: "3"
 services:
   nextcloud:
-    image: nextcloud:21.0
+    image: nextcloud:24.0.5
     restart: unless-stopped
     environment:
       NEXTCLOUD_TRUSTED_DOMAINS: ${NEXTCLOUD_HOST}
